@@ -1,4 +1,4 @@
-const csv = require('rpg-csv')
+const csv = require('@bredele/rpg-csv')
 const fs = require('fs')
 const mkdirp = require('mkdirp')
 const { join } = require('path')
@@ -12,7 +12,7 @@ const { join } = require('path')
  * @public
  */
 
-module.exports = function(record, path) {
+module.exports = async function(record, path) {
    await writeCsvLog(path, record)
    await writeJsonLog(path, record)
 }
@@ -31,7 +31,7 @@ async function writeCsvLog(path, record) {
   const name = (new Date()).toLocaleDateString().replace(/\//g, '-')
   const file = join(path, `${name}.csv`)
   if (await exist(file)) {
-    await fs.appendFile(file, result)
+    await append(file, result)
   } else {
     await create(file, `${csv.columns}\n${result}`)
   }
@@ -48,7 +48,7 @@ async function writeCsvLog(path, record) {
 
 async function writeJsonLog(path, record) {
   const folder = join(path, 'records')
-  mkdirp(folder)
+  await mkdirp(folder)
   await create(join(folder, `${new Date().getTime()}.json`), JSON.stringify(record))
 }
 
@@ -89,5 +89,5 @@ async function create(file, content) {
  */
 
 async function append(file, content) {
-  return fs.promises.appendFile(file, content)
+  return fs.promises.appendFile(file, `\n${content}`)
 }

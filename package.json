@@ -4,7 +4,7 @@
   "description": "Create log files from RPG records",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*js"
+    "test": "node test/log.js"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
