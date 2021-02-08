@@ -1,5 +1,6 @@
 const csv = require('rpg-csv')
 const fs = require('fs')
+const mkdirp = require('mkdirp')
 const { join } = require('path')
 
 /**
@@ -12,16 +13,43 @@ const { join } = require('path')
  */
 
 module.exports = function(record, path) {
-   const result = csv(record)
-   const name = (new Date()).toLocaleDateString().replace(/\//g, '-')
-   const file = join(path, `${name}.csv`)
-   if (await exist(file)) {
-     await fs.appendFile(file, result)
-   } else {
-     await create(file, `${csv.columns}\n${result}`)
-   }
-   //await create(, JSON.stringify(record))
-   return record
+   await writeCsvLog(path, record)
+   await writeJsonLog(path, record)
+}
+
+/**
+ * Write CSV log.
+ * 
+ * @param {String} path 
+ * @param {Array} record 
+ * @returns {Promise}
+ * @private
+ */
+
+async function writeCsvLog(path, record) {
+  const result = csv(record)
+  const name = (new Date()).toLocaleDateString().replace(/\//g, '-')
+  const file = join(path, `${name}.csv`)
+  if (await exist(file)) {
+    await fs.appendFile(file, result)
+  } else {
+    await create(file, `${csv.columns}\n${result}`)
+  }
+}
+
+/**
+ * Write JSON log.
+ * 
+ * @param {String} path 
+ * @param {Array} record 
+ * @returns {Promise}
+ * @private
+ */
+
+async function writeJsonLog(path, record) {
+  const folder = join(path, 'records')
+  mkdirp(folder)
+  await create(join(folder, `${new Date().getTime()}.json`), JSON.stringify(record))
 }
 
 /**

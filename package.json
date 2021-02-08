@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/bredele/rpg-log#readme",
   "dependencies": {
-    "@bredele/rpg-csv": "1.0.0"
+    "@bredele/rpg-csv": "1.0.0",
+    "mkdirp": "1.0.4"
   }
 }
