@@ -1,0 +1,27 @@
+{
+  "name": "@bredele/rpg-log",
+  "version": "1.0.0",
+  "description": "Create log files from RPG records",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bredele/rpg-log.git"
+  },
+  "keywords": [
+    "rpg",
+    "record",
+    "log",
+    "csv",
+    "json",
+    "interra"
+  ],
+  "author": "Olivier Wietrich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bredele/rpg-log/issues"
+  },
+  "homepage": "https://github.com/bredele/rpg-log#readme"
+}
