@@ -27,13 +27,13 @@ module.exports = async function(record, path) {
  */
 
 async function writeCsvLog(path, record) {
-  const result = csv(record)
+  const result = `,${new Date().toString()}${csv(record)}`
   const name = (new Date()).toLocaleDateString().replace(/\//g, '-')
   const file = join(path, `${name}.csv`)
   if (await exist(file)) {
     await append(file, result)
   } else {
-    await create(file, `${csv.columns}\n${result}`)
+    await create(file, `,Timestamp${csv.columns}\n${result}`)
   }
 }
 
